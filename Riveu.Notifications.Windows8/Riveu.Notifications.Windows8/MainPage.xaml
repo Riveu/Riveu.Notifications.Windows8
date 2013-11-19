@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="Riveu.Notifications.Windows8.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Riveu.Notifications.Windows8"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock x:Name="statusLabel" />
+        <ListView Margin="20,0,0,50" x:Name="listView" />
+        
+    </Grid>
+    <Page.BottomAppBar>
+        <AppBar IsOpen="True">
+            <Grid>
+                <Button Grid.Column="0" Content="View Notifications" x:Name="viewNotificationsButton" IsEnabled="False" />
+                <Button Grid.Column="1" Content="Send Notification" x:Name="sendNotificationsButton" Click="sendNotificationsButton_Click" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
+</Page>
