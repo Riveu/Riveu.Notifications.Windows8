@@ -43,6 +43,7 @@ namespace Riveu.Notifications.Windows8
                         await client.SendNotificationAsync(username, password, messageTextBox.Text);
                         MessageDialog messageDialog = new MessageDialog("Message sent successfully.");
                         await messageDialog.ShowAsync();
+                        messageTextBox.Text = String.Empty;
                     }
                     else
                     {
