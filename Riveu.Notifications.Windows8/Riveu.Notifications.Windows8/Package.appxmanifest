@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="44462michaeldlesk.RiveuNotifications" Publisher="CN=32EE92F9-809A-4D67-8AB3-817D4CEB142E" Version="1.0.0.0" />
+  <Identity Name="44462michaeldlesk.RiveuNotifications" Publisher="CN=32EE92F9-809A-4D67-8AB3-817D4CEB142E" Version="1.0.0.2" />
   <Properties>
     <DisplayName>Riveu Notifications</DisplayName>
     <PublisherDisplayName>michaeldlesk</PublisherDisplayName>

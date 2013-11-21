@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
@@ -34,6 +35,7 @@ namespace Riveu.Notifications.Windows8
         Rect _windowBounds;
         double _settingsWidth = 346;
         Popup _settingsPopup;
+        DispatcherTimer timer = new DispatcherTimer();
 
         public MainPage()
         {
@@ -64,7 +66,41 @@ namespace Riveu.Notifications.Windows8
                 _settingsPopup.SetValue(Canvas.TopProperty, 0);
                 _settingsPopup.IsOpen = true;
             });
+            SettingsCommand privacyPolicyCommand = new SettingsCommand("privacyPolicy", "Privacy Policy", (x) =>
+            {
+                _settingsPopup = new Popup();
+                _settingsPopup.Closed += _settingsPopup_Closed;
+                Window.Current.Activated += Current_Activated;
+                _settingsPopup.IsLightDismissEnabled = true;
+                _settingsPopup.Width = _settingsWidth;
+                _settingsPopup.Height = _windowBounds.Height;
+                PrivacyPolicy settingsPane = new PrivacyPolicy();
+                settingsPane.Width = _settingsWidth;
+                settingsPane.Height = _windowBounds.Height;
+                _settingsPopup.Child = settingsPane;
+                _settingsPopup.SetValue(Canvas.LeftProperty, _windowBounds.Width - _settingsWidth);
+                _settingsPopup.SetValue(Canvas.TopProperty, 0);
+                _settingsPopup.IsOpen = true;
+            });
+            SettingsCommand registerCommand = new SettingsCommand("register", "Register", (x) =>
+            {
+                _settingsPopup = new Popup();
+                _settingsPopup.Closed += _settingsPopup_Closed;
+                Window.Current.Activated += Current_Activated;
+                _settingsPopup.IsLightDismissEnabled = true;
+                _settingsPopup.Width = _settingsWidth;
+                _settingsPopup.Height = _windowBounds.Height;
+                RegisterUser settingsPane = new RegisterUser();
+                settingsPane.Width = _settingsWidth;
+                settingsPane.Height = _windowBounds.Height;
+                _settingsPopup.Child = settingsPane;
+                _settingsPopup.SetValue(Canvas.LeftProperty, _windowBounds.Width - _settingsWidth);
+                _settingsPopup.SetValue(Canvas.TopProperty, 0);
+                _settingsPopup.IsOpen = true;
+            });
             args.Request.ApplicationCommands.Add(settingsCommand);
+            args.Request.ApplicationCommands.Add(registerCommand);
+            args.Request.ApplicationCommands.Add(privacyPolicyCommand);
         }
 
         void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
@@ -81,23 +117,54 @@ namespace Riveu.Notifications.Windows8
                 NotificationService.NotificationServiceClient client = new NotificationService.NotificationServiceClient();
                 username = ApplicationData.Current.LocalSettings.Values["Username"] as String;
                 password = ApplicationData.Current.LocalSettings.Values["Password"] as String;
-                if (await client.AuthenticateUserAsync(username, password))
+                try
                 {
-                    var data = await client.GetNotificationsAsync(username);
-                    listView.ItemsSource = data;
-                    statusLabel.Text = String.Empty;
-                    if(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values["EnablePush"]) == true)
+                    if (await client.AuthenticateUserAsync(username, password))
                     {
-                        CreatAndSendPushChannel();
+                        var data = await client.GetNotificationsAsync(username);
+                        listView.ItemsSource = data;
+                        statusLabel.Text = String.Empty;
+                        if (timer.IsEnabled)
+                        {
+                            timer.Stop();
+                        }
+                        try
+                        {
+                            int interval = Int32.Parse(ApplicationData.Current.LocalSettings.Values["RefreshRate"].ToString());
+                            timer = new DispatcherTimer();
+                            timer.Interval = new TimeSpan(0, 0, interval);
+                            timer.Tick += timer_Tick;
+                            timer.Start();
+                        }
+                        catch
+                        {
+                            try
+                            {
+                                MessageDialog dialog = new MessageDialog("Please set refresh rate in settings");
+                                dialog.ShowAsync();
+                            }
+                            catch
+                            {
+                                //do nothing
+                            }
+                        }
+                        if (Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values["EnablePush"]) == true)
+                        {
+                            CreatAndSendPushChannel();
+                        }
+                        else
+                        {
+                            UnregisterSubscriber();
+                        }
                     }
                     else
                     {
-                        UnregisterSubscriber();
+                        statusLabel.Text = "Invalid Credentials";
                     }
                 }
-                else
+                catch
                 {
-                    statusLabel.Text = "Invalid Credentials";
+                    new MessageDialog("Unable to connect to Riveu server. Please verify internet connection and re-launch application").ShowAsync();
                 }
             }
         }
@@ -122,29 +189,73 @@ namespace Riveu.Notifications.Windows8
                 username = ApplicationData.Current.LocalSettings.Values["Username"] as String;
                 password = ApplicationData.Current.LocalSettings.Values["Password"] as String;
                 //Authenticate
-                if (await client.AuthenticateUserAsync(username, password))
+                try
                 {
-                    var data = await client.GetNotificationsAsync(username);
-                    listView.ItemsSource = data;
-                    statusLabel.Text = String.Empty;
-                    if (Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values["EnablePush"]) == true)
+                    if (await client.AuthenticateUserAsync(username, password))
                     {
-                        CreatAndSendPushChannel();
+                        var data = await client.GetNotificationsAsync(username);
+                        listView.ItemsSource = data;
+                        statusLabel.Text = String.Empty;
+                        if (timer.IsEnabled)
+                        {
+                            timer.Stop();
+                        }
+                        try
+                        {
+                            int interval = Int32.Parse(ApplicationData.Current.LocalSettings.Values["RefreshRate"].ToString());
+                            timer = new DispatcherTimer();
+                            timer.Interval = new TimeSpan(0, 0, interval);
+                            timer.Tick += timer_Tick;
+                            timer.Start();
+                        }
+                        catch
+                        {
+                            MessageDialog dialog = new MessageDialog("Please set refresh rate in settings");
+                            dialog.ShowAsync();
+                        }
+                        if (Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values["EnablePush"]) == true)
+                        {
+                            CreatAndSendPushChannel();
+                        }
+                        else
+                        {
+                            UnregisterSubscriber();
+                        }
                     }
                     else
                     {
-                        UnregisterSubscriber();
+                        statusLabel.Text = "Invalid Credentials";
                     }
                 }
-                else
+                catch
                 {
-                    statusLabel.Text = "Invalid Credentials";
+                    new MessageDialog("Unable to connect to Riveu server. Please verify internet connection and re-launch application").ShowAsync();
                 }
-                
             }
             else
             {
                 statusLabel.Text = "Please configure settings";
+            }
+        }
+
+        async void timer_Tick(object sender, object e)
+        {
+            try
+            {
+                NotificationService.NotificationServiceClient client = new NotificationService.NotificationServiceClient();
+                if (await client.AuthenticateUserAsync(username, password))
+                {
+                    var data = await client.GetNotificationsAsync(username);
+                    if (data.Count != ((ObservableCollection<object>)listView.ItemsSource).Count)
+                    {
+                        listView.ItemsSource = data;
+                    }
+
+                }
+            }
+            catch
+            {
+                new MessageDialog("Unable to connect to Riveu server. Please verify internet connection and re-launch application").ShowAsync();
             }
         }
 

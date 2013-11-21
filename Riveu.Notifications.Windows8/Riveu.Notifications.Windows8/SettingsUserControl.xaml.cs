@@ -46,6 +46,12 @@ namespace Riveu.Notifications.Windows8
             {
                 passwordTextbox.Password = ApplicationData.Current.LocalSettings.Values["Password"].ToString();
             }
+
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey("RefreshRate"))
+            {
+                refreshRateTextbox.Text = ApplicationData.Current.LocalSettings.Values["RefreshRate"].ToString();
+            }
+
         }
 
         private void SettingsBackClicked(object sender, RoutedEventArgs e)
@@ -62,10 +68,16 @@ namespace Riveu.Notifications.Windows8
             ApplicationData.Current.LocalSettings.Values["EnablePush"] = enablePushNotification.IsOn;
             ApplicationData.Current.LocalSettings.Values["Username"] = usernameTextbox.Text;
             ApplicationData.Current.LocalSettings.Values["Password"] = passwordTextbox.Password;
+            ApplicationData.Current.LocalSettings.Values["RefreshRate"] = refreshRateTextbox.Text;
             MessageDialog messageBox = new MessageDialog("Settings Saved");
             if (String.IsNullOrEmpty(usernameTextbox.Text) || String.IsNullOrEmpty(passwordTextbox.Password))
             {
                 messageBox = new MessageDialog("Username and Password are required");
+            }
+            short dummyVariable;
+            if (!Int16.TryParse(refreshRateTextbox.Text, out dummyVariable))
+            {
+                messageBox = new MessageDialog("Refresh rate must be a number.");
             }
             await messageBox.ShowAsync();
         }

@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="Riveu.Notifications.Windows8.SettingsUserControl"
+    x:Class="Riveu.Notifications.Windows8.PrivacyPolicy"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:FoscamViewer"
@@ -44,7 +44,7 @@
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal" />
-                                    
+
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
                                             <DoubleAnimation
@@ -119,7 +119,7 @@
 
                     <Button Click="SettingsBackClicked" Margin="0,3,0,0" Grid.Column="0" Style="{StaticResource SettingsBackButtonStyle}" HorizontalAlignment="Left" />
 
-                    <TextBlock Margin="10,0,0,0" Grid.Column="1" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="24.6667" Text="Settings" HorizontalAlignment="Left" />
+                    <TextBlock Margin="10,0,0,0" Grid.Column="1" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="20" Text="Privacy Policy" HorizontalAlignment="Left" />
 
                     <Image Source="Assets/SmallLogo.png" HorizontalAlignment="Right" Grid.Column="2" Margin="0,0,6,0" />
 
@@ -129,31 +129,12 @@
 
             <!-- Settings Panel Content -->
             <Grid Grid.Row="1" Margin="40,24,23,0" VerticalAlignment="Top">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="75" />
-                    <RowDefinition Height="50" />
-                    <RowDefinition Height="50" />
-                    <RowDefinition Height="50" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="130" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                <TextBlock FontSize="15" TextWrapping="Wrap">By using this application, you as an end user, accept the terms and agreement as follows. This application may be used for personal or business purposes and will require registering an account at Riveu.com before being able to use the service. This application may exchange data with the Riveu Notification Server. No personal data will be transmitted, only your username, password, and the notification messages the end user wishes to send / view. IP Addresses and other technical data is not gathered. Riveu reserves the right, at any point in time, to charge an amount for this application through the Windows Store. Riveu will provide support for this application and the Notifications service through email support. This application is owned by Riveu and we reserve the right to make changes as necessary. Please email info@riveu.com for any general or technical questions. In the event that you need support or wish to report a defect, please do so at that email address. All rights reserved. Riveu. Copyright 2013.</TextBlock>
                 <Grid.Transitions>
                     <TransitionCollection>
                         <EntranceThemeTransition FromHorizontalOffset="120" />
                     </TransitionCollection>
                 </Grid.Transitions>
-                <ToggleSwitch x:Name="enablePushNotification" Header="Enable Push Notifications" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
-                <TextBlock Text="Username: " Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                <TextBox Grid.Row="1" Grid.Column="1" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="usernameTextbox" />
-                <TextBlock Text="Password: " HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" />
-                <PasswordBox Grid.Row="2" Grid.Column="1" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="passwordTextbox" />
-                <TextBlock Text="Refresh Rate (Seconds): " Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                <TextBox Grid.Row="3" Grid.Column="1" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="refreshRateTextbox" />
-                <Button Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" Margin="0,0,70,0" HorizontalAlignment="Right" Content="Register" Click="RegisterButton_Click" />
-                <Button Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Right" Content="Save" Click="SaveButton_Click" />
             </Grid>
 
         </Grid>

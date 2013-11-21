@@ -31,19 +31,34 @@ namespace Riveu.Notifications.Windows8
 
         private async void sendButton_Click(object sender, RoutedEventArgs e)
         {
-            NotificationService.NotificationServiceClient client = new NotificationService.NotificationServiceClient();
-            string username = ApplicationData.Current.LocalSettings.Values["Username"] as String;
-            string password = ApplicationData.Current.LocalSettings.Values["Password"] as String;
-            if (!String.IsNullOrEmpty(username) && !String.IsNullOrEmpty(password))
+            try
             {
-                await client.SendNotificationAsync(username, password, messageTextBox.Text);
-                MessageDialog messageDialog = new MessageDialog("Message sent successfully.");
-                await messageDialog.ShowAsync();
+                NotificationService.NotificationServiceClient client = new NotificationService.NotificationServiceClient();
+                string username = ApplicationData.Current.LocalSettings.Values["Username"] as String;
+                string password = ApplicationData.Current.LocalSettings.Values["Password"] as String;
+                if (!String.IsNullOrEmpty(messageTextBox.Text.Trim()))
+                {
+                    if (!String.IsNullOrEmpty(username) && !String.IsNullOrEmpty(password))
+                    {
+                        await client.SendNotificationAsync(username, password, messageTextBox.Text);
+                        MessageDialog messageDialog = new MessageDialog("Message sent successfully.");
+                        await messageDialog.ShowAsync();
+                    }
+                    else
+                    {
+                        MessageDialog messageDialog = new MessageDialog("Please verify credentials are set in the settings.");
+                        await messageDialog.ShowAsync();
+                    }
+                }
+                else
+                {
+                    await new MessageDialog("Please ensure that you enter a message").ShowAsync();
+                }
             }
-            else
+            catch
             {
-                MessageDialog messageDialog = new MessageDialog("Please verify credentials are set in the settings.");
-                await messageDialog.ShowAsync();
+                MessageDialog messageDialog = new MessageDialog("Unable to send message. Please verify credentials are set in the settings and you have an internet connection.");
+                messageDialog.ShowAsync();
             }
         }
 
