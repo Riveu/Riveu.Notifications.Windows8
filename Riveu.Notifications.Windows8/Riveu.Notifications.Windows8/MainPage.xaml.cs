@@ -117,6 +117,7 @@ namespace Riveu.Notifications.Windows8
                 NotificationService.NotificationServiceClient client = new NotificationService.NotificationServiceClient();
                 username = ApplicationData.Current.LocalSettings.Values["Username"] as String;
                 password = ApplicationData.Current.LocalSettings.Values["Password"] as String;
+                listView.ItemsSource = null;
                 try
                 {
                     if (await client.AuthenticateUserAsync(username, password))
@@ -131,6 +132,10 @@ namespace Riveu.Notifications.Windows8
                         try
                         {
                             int interval = Int32.Parse(ApplicationData.Current.LocalSettings.Values["RefreshRate"].ToString());
+                            if (interval == 0)
+                            {
+                                interval = 30;
+                            }
                             timer = new DispatcherTimer();
                             timer.Interval = new TimeSpan(0, 0, interval);
                             timer.Tick += timer_Tick;
@@ -188,7 +193,7 @@ namespace Riveu.Notifications.Windows8
                 NotificationService.NotificationServiceClient client = new NotificationService.NotificationServiceClient();
                 username = ApplicationData.Current.LocalSettings.Values["Username"] as String;
                 password = ApplicationData.Current.LocalSettings.Values["Password"] as String;
-                //Authenticate
+                listView.ItemsSource = null;
                 try
                 {
                     if (await client.AuthenticateUserAsync(username, password))
@@ -203,6 +208,10 @@ namespace Riveu.Notifications.Windows8
                         try
                         {
                             int interval = Int32.Parse(ApplicationData.Current.LocalSettings.Values["RefreshRate"].ToString());
+                            if (interval == 0)
+                            {
+                                interval = 30;
+                            }
                             timer = new DispatcherTimer();
                             timer.Interval = new TimeSpan(0, 0, interval);
                             timer.Tick += timer_Tick;

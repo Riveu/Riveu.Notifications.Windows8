@@ -44,9 +44,9 @@ namespace Riveu.Notifications.Windows8
             {
                 try
                 {
-                    if (true)//check account
+                    if (! await new NotificationService.NotificationServiceClient().VerifyUserAccountExistsAsync(username))//check user account doesn't exist
                     {
-                        if (true)//create account
+                        if (await new NotificationService.NotificationServiceClient().RegisterUserAsync(username, password))//create account
                         {
                             await new MessageDialog("Account has been successfully created. You may use this new account by updating the application settings.").ShowAsync();
                         }

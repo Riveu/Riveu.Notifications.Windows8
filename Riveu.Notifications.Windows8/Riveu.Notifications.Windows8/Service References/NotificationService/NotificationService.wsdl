@@ -37,6 +37,18 @@
   <wsdl:message name="INotificationService_SendNotification_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendNotificationResponse" />
   </wsdl:message>
+  <wsdl:message name="INotificationService_RegisterUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUser" />
+  </wsdl:message>
+  <wsdl:message name="INotificationService_RegisterUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="INotificationService_VerifyUserAccountExists_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyUserAccountExists" />
+  </wsdl:message>
+  <wsdl:message name="INotificationService_VerifyUserAccountExists_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyUserAccountExistsResponse" />
+  </wsdl:message>
   <wsdl:portType name="INotificationService">
     <wsdl:operation name="AuthenticateUser">
       <wsdl:input wsaw:Action="http://tempuri.org/INotificationService/AuthenticateUser" message="tns:INotificationService_AuthenticateUser_InputMessage" />
@@ -57,6 +69,14 @@
     <wsdl:operation name="SendNotification">
       <wsdl:input wsaw:Action="http://tempuri.org/INotificationService/SendNotification" message="tns:INotificationService_SendNotification_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/INotificationService/SendNotificationResponse" message="tns:INotificationService_SendNotification_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/INotificationService/RegisterUser" message="tns:INotificationService_RegisterUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INotificationService/RegisterUserResponse" message="tns:INotificationService_RegisterUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyUserAccountExists">
+      <wsdl:input wsaw:Action="http://tempuri.org/INotificationService/VerifyUserAccountExists" message="tns:INotificationService_VerifyUserAccountExists_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INotificationService/VerifyUserAccountExistsResponse" message="tns:INotificationService_VerifyUserAccountExists_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_INotificationService" type="tns:INotificationService">
@@ -99,6 +119,24 @@
     </wsdl:operation>
     <wsdl:operation name="SendNotification">
       <soap:operation soapAction="http://tempuri.org/INotificationService/SendNotification" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <soap:operation soapAction="http://tempuri.org/INotificationService/RegisterUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyUserAccountExists">
+      <soap:operation soapAction="http://tempuri.org/INotificationService/VerifyUserAccountExists" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

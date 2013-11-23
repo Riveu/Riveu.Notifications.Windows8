@@ -65,19 +65,42 @@ namespace Riveu.Notifications.Windows8
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            ApplicationData.Current.LocalSettings.Values["EnablePush"] = enablePushNotification.IsOn;
-            ApplicationData.Current.LocalSettings.Values["Username"] = usernameTextbox.Text;
-            ApplicationData.Current.LocalSettings.Values["Password"] = passwordTextbox.Password;
-            ApplicationData.Current.LocalSettings.Values["RefreshRate"] = refreshRateTextbox.Text;
-            MessageDialog messageBox = new MessageDialog("Settings Saved");
-            if (String.IsNullOrEmpty(usernameTextbox.Text) || String.IsNullOrEmpty(passwordTextbox.Password))
+            MessageDialog messageBox;
+            try
             {
-                messageBox = new MessageDialog("Username and Password are required");
+                
+                if (await new NotificationService.NotificationServiceClient().AuthenticateUserAsync(usernameTextbox.Text, passwordTextbox.Password))
+                {
+                    messageBox = new MessageDialog("Settings Saved");
+                    if (String.IsNullOrEmpty(usernameTextbox.Text) || String.IsNullOrEmpty(passwordTextbox.Password))
+                    {
+                        messageBox = new MessageDialog("Username and Password are required");
+                    }
+                    int dummyVariable = 0;
+                    if (!Int32.TryParse(refreshRateTextbox.Text, out dummyVariable))
+                    {
+                        messageBox = new MessageDialog("Refresh rate must be a number.");
+                    }
+                    else if((dummyVariable <1 ||  dummyVariable > 59))
+                    {
+                        messageBox = new MessageDialog("Refresh rate must be a number between 1 and 59");
+                    }
+                    if (messageBox.Content == "Settings Saved")
+                    {
+                        ApplicationData.Current.LocalSettings.Values["EnablePush"] = enablePushNotification.IsOn;
+                        ApplicationData.Current.LocalSettings.Values["Username"] = usernameTextbox.Text;
+                        ApplicationData.Current.LocalSettings.Values["Password"] = passwordTextbox.Password;
+                        ApplicationData.Current.LocalSettings.Values["RefreshRate"] = refreshRateTextbox.Text;
+                    }
+                }
+                else
+                {
+                    messageBox = new MessageDialog("Invalid Credentials. Please verify and try again.");
+                }
             }
-            short dummyVariable;
-            if (!Int16.TryParse(refreshRateTextbox.Text, out dummyVariable))
+            catch
             {
-                messageBox = new MessageDialog("Refresh rate must be a number.");
+                messageBox = new MessageDialog("An error occured while trying to validate the credentials. Please verify internet connection and try again.");
             }
             await messageBox.ShowAsync();
         }

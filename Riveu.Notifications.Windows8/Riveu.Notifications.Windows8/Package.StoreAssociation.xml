@@ -2,7 +2,7 @@
 <StoreAssociation xmlns="http://schemas.microsoft.com/appx/2010/storeassociation">
   <Publisher>CN=32EE92F9-809A-4D67-8AB3-817D4CEB142E</Publisher>
   <NamespacePrefix>44462michaeldlesk</NamespacePrefix>
-  <PublisherDisplayName>michaeldlesk</PublisherDisplayName>
+  <PublisherDisplayName>Riveu</PublisherDisplayName>
   <GeneratePackageHash>http://www.w3.org/2001/04/xmlenc#sha256</GeneratePackageHash>
   <SupportedLocales>
     <Language Code="af" InMinimumRequirementSet="false" />
@@ -357,5 +357,11 @@
   <AccountPackageIdentityNames>
     <MainPackageIdentityName>44462michaeldlesk.RiveuFoscamViewer</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://appdev.microsoft.com:443/StorePortals/Developer/Catalog/ReleaseAnchor/4261356c-dbde-4ee5-8664-4456e94b3c53" />
+  <PackageInfoList LandingUrl="https://appdev.microsoft.com:443/StorePortals/Developer/Catalog/ReleaseAnchor/4261356c-dbde-4ee5-8664-4456e94b3c53">
+    <PackageInfo>
+      <OsMinVersion>6.2.1.0</OsMinVersion>
+      <PackageArchitecture>neutral</PackageArchitecture>
+      <PackageMaxArchitectureVersion>1.0.0.2</PackageMaxArchitectureVersion>
+    </PackageInfo>
+  </PackageInfoList>
 </StoreAssociation>

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="44462michaeldlesk.RiveuNotifications" Publisher="CN=32EE92F9-809A-4D67-8AB3-817D4CEB142E" Version="1.0.0.2" />
+  <Identity Name="44462michaeldlesk.RiveuNotifications" Publisher="CN=32EE92F9-809A-4D67-8AB3-817D4CEB142E" Version="1.1.0.2" />
   <Properties>
     <DisplayName>Riveu Notifications</DisplayName>
-    <PublisherDisplayName>michaeldlesk</PublisherDisplayName>
+    <PublisherDisplayName>Riveu</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
@@ -15,8 +15,8 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Riveu.Notifications.Windows8.App">
-      <VisualElements DisplayName="Riveu Notifications" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Riveu.Notifications.Windows8" ForegroundText="light" BackgroundColor="#464646" ToastCapable="true">
-        <DefaultTile ShowName="logoOnly" />
+      <VisualElements DisplayName="Riveu Notifications" Logo="Assets\SquareLogo.png" SmallLogo="Assets\SmallLogo.png" Description="Riveu.Notifications.Windows8" ForegroundText="light" BackgroundColor="#464646" ToastCapable="true">
+        <DefaultTile ShowName="allLogos" ShortName="Notifications" WideLogo="Assets\Wide310x150Logo.png" />
         <SplashScreen Image="Assets\SplashScreen.png" />
       </VisualElements>
     </Application>

@@ -33,6 +33,12 @@ namespace Riveu.Notifications.Windows8.NotificationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/INotificationService/SendNotification", ReplyAction="http://tempuri.org/INotificationService/SendNotificationResponse")]
         System.Threading.Tasks.Task SendNotificationAsync(string username, string password, string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/INotificationService/RegisterUser", ReplyAction="http://tempuri.org/INotificationService/RegisterUserResponse")]
+        System.Threading.Tasks.Task<bool> RegisterUserAsync(string username, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/INotificationService/VerifyUserAccountExists", ReplyAction="http://tempuri.org/INotificationService/VerifyUserAccountExistsResponse")]
+        System.Threading.Tasks.Task<bool> VerifyUserAccountExistsAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -96,6 +102,14 @@ namespace Riveu.Notifications.Windows8.NotificationService {
         
         public System.Threading.Tasks.Task SendNotificationAsync(string username, string password, string message) {
             return base.Channel.SendNotificationAsync(username, password, message);
+        }
+        
+        public System.Threading.Tasks.Task<bool> RegisterUserAsync(string username, string password) {
+            return base.Channel.RegisterUserAsync(username, password);
+        }
+        
+        public System.Threading.Tasks.Task<bool> VerifyUserAccountExistsAsync(string username) {
+            return base.Channel.VerifyUserAccountExistsAsync(username);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync() {

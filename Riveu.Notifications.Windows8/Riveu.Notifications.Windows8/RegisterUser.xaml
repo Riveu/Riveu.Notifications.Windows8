@@ -119,7 +119,7 @@
 
                     <Button Click="SettingsBackClicked" Margin="0,3,0,0" Grid.Column="0" Style="{StaticResource SettingsBackButtonStyle}" HorizontalAlignment="Left" />
 
-                    <TextBlock Margin="10,0,0,0" Grid.Column="1" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="20" Text="Privacy Policy" HorizontalAlignment="Left" />
+                    <TextBlock Margin="10,0,0,0" Grid.Column="1" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="20" Text="Register" HorizontalAlignment="Left" />
 
                     <Image Source="Assets/SmallLogo.png" HorizontalAlignment="Right" Grid.Column="2" Margin="0,0,6,0" />
 
